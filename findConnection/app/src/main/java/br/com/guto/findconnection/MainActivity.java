@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkForConnection(){
         final Handler handler = new Handler(Looper.getMainLooper());
-        final int tempoDeEspera = 3000;
+        final int tempoDeEspera = 1000;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -56,10 +56,12 @@ public class MainActivity extends AppCompatActivity {
                                     ivConnected.setEnabled(true);
 
                                 if(isOnline())
-                                    ivPing.setEnabled(false);
+                                    if(ivPing.isEnabled())
+                                        ivPing.setEnabled(false);
                                 else {
-                                    Toast.makeText(MainActivity.this, "Connection not Active", Toast.LENGTH_SHORT).show();
-                                    ivPing.setEnabled(true);
+                                    //Toast.makeText(MainActivity.this, "Connection not Active", Toast.LENGTH_SHORT).show();
+                                    if(!ivPing.isEnabled())
+                                        ivPing.setEnabled(true);
                                     connectToCustomWifi();
                                     SystemClock.sleep(tempoDeEspera);
 
@@ -74,8 +76,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connectToCustomWifi() {
-        String networkSSID = "Pastaroperacao";
-        String networkPass = "cElt@0102";
+        String networkSSID = "DrPastar";
+        String networkPass = "#descubr@";
+        //String networkSSID = "Pastaroperacao";
+        //String networkPass = "cElt@0102";
 
         WifiConfiguration conf = new WifiConfiguration();
         conf.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
